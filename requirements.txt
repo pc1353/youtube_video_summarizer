@@ -1,0 +1,8 @@
+streamlit
+pytube
+cached_property
+torch
+google-generativeai
+python-dotenv
+openai-whisper
+langchain_core
