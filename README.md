@@ -48,10 +48,6 @@ The YouTube Video Summarizer is a Python application designed to extract and sum
 
 Contributions are welcome! Please open an issue or submit a pull request for any features or fixes.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Contact
 
 For any questions or suggestions, please contact [prnavchaniyara123@gmail.com].
