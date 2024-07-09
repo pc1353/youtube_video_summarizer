@@ -41,7 +41,7 @@ The YouTube Video Summarizer is a Python application designed to extract and sum
 ## Files
 
 - `app.py`: Main application script that handles video extraction and summarization.
-- `constants.py`: Contains API key and other constants.
+- `constants.py`: Contains Model Name and Prompt.
 - `requirements.txt`: Lists all the dependencies required to run the application.
 
 ## Contributing
