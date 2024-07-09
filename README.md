@@ -6,7 +6,7 @@ The YouTube Video Summarizer is a Python application designed to extract and sum
 
 ## Features
 
-- Extracts video content using YouTube API.
+- Extracts video content using OpenAI Whisper.
 - Summarizes extracted text using OpenAI Whisper.
 - Provides concise summaries of video content using Gemini 1.5-flash.
 - Easy-to-use interface.
