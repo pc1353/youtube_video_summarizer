@@ -26,11 +26,11 @@ The YouTube Video Summarizer is a Python application designed to extract and sum
 
 ## Usage
 
-1. **Set up YouTube API credentials:**
+1. **Set up Gemini API credentials:**
    - Obtain API key from [Google Developers Console](https://console.developers.google.com/).
-   - Create a `constants.py` file with your API key:
+   - Create a `.env` file with your API key:
      ```python
-     API_KEY = 'YOUR_GEMINI_API_KEY'
+     GOOGLE_API_KEY = 'YOUR_GEMINI_API_KEY'
      ```
 
 2. **Run the application:**
