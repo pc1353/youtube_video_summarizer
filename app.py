@@ -28,7 +28,7 @@ def prompt_node(text):
 
 def download_video(url):
     yt = YouTube(url)
-    video = yt.streams.filter(abr='160kbps').last()
+    video = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
     return video.download()
 
 def transcribe_audio(file_path):
