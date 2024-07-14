@@ -1,5 +1,5 @@
 import streamlit as st
-from pytube import YouTube
+import yt_dlp
 import whisper
 import time
 import google.generativeai as genai
@@ -27,9 +27,14 @@ def prompt_node(text):
     return prompt_formatted_str
 
 def download_video(url):
-    yt = YouTube(url)
-    video = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
-    return video.download()
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': 'downloads/%(title)s.%(ext)s',
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info_dict = ydl.extract_info(url, download=True)
+        file_path = ydl.prepare_filename(info_dict)
+    return file_path
 
 def transcribe_audio(file_path):
     output = whisper_model.transcribe(file_path)
