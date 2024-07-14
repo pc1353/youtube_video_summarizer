@@ -1,5 +1,5 @@
 streamlit
-pytube
+yt_dlp
 cached_property
 torch
 google-generativeai
