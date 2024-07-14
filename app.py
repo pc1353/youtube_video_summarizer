@@ -1,4 +1,5 @@
 import streamlit as st
+from pytube import YouTube
 import whisper
 import time
 import google.generativeai as genai
@@ -8,10 +9,7 @@ from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from constants import PROMPT, MODEL_NAME
 import yt_dlp
-import subprocess
-import sys
-import platform
-import shutil
+
 
 load_dotenv()
 
@@ -23,52 +21,6 @@ whisper_model = whisper.load_model("base")
 st.set_page_config(
     layout="wide"
 )
-
-def install_ffmpeg():
-    system = platform.system().lower()
-    if system == "windows":
-        ffmpeg_url = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z"
-        ffmpeg_extracted_path = "ffmpeg-release-full"
-        ffmpeg_exe_path = os.path.join(ffmpeg_extracted_path, "bin", "ffmpeg.exe")
-    elif system == "linux":
-        ffmpeg_url = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz"
-        ffmpeg_extracted_path = "ffmpeg-release-64bit-static"
-        ffmpeg_exe_path = os.path.join(ffmpeg_extracted_path, "ffmpeg")
-    elif system == "darwin":
-        ffmpeg_url = "https://evermeet.cx/ffmpeg/ffmpeg-5.0.1.zip"
-        ffmpeg_extracted_path = "ffmpeg-5.0.1"
-        ffmpeg_exe_path = os.path.join(ffmpeg_extracted_path, "ffmpeg")
-    else:
-        raise Exception(f"Unsupported platform: {system}")
-
-    ffmpeg_download_path = "ffmpeg_download"
-
-    if not os.path.exists(ffmpeg_exe_path):
-        # Download ffmpeg
-        st.info("Downloading ffmpeg...")
-        if not os.path.exists(ffmpeg_download_path):
-            os.makedirs(ffmpeg_download_path)
-        ffmpeg_download_file = os.path.join(ffmpeg_download_path, os.path.basename(ffmpeg_url))
-
-        if not os.path.exists(ffmpeg_download_file):
-            import requests
-            response = requests.get(ffmpeg_url, stream=True)
-            with open(ffmpeg_download_file, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    f.write(chunk)
-        
-        # Extract ffmpeg
-        st.info("Extracting ffmpeg...")
-        if system == "windows":
-            import py7zr
-            with py7zr.SevenZipFile(ffmpeg_download_file, 'r') as archive:
-                archive.extractall(ffmpeg_download_path)
-        elif system == "linux":
-            subprocess.run(["tar", "-xf", ffmpeg_download_file, "-C", ffmpeg_download_path])
-        elif system == "darwin":
-            subprocess.run(["unzip", ffmpeg_download_file, "-d", ffmpeg_download_path])
-
-    os.environ["PATH"] += os.pathsep + os.path.abspath(ffmpeg_extracted_path)
 
 def prompt_node(text):
     prompt_template = PromptTemplate(template=PROMPT, input_variables=["context"])
@@ -91,7 +43,6 @@ def transcribe_audio(file_path):
     return output
 
 def main():
-    install_ffmpeg()
 
     # Set the title and background color
     st.title("YouTube Video Summarizer 🎥")
